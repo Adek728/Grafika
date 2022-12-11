@@ -1,0 +1,34 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+<script type="text/javascript">
+
+function preload() {
+    img = loadImage("https://raw.githubusercontent.com/scikit-image/scikit-image/master/skimage/data/astronaut.png");
+    tablica = new Array(256);
+}
+
+function setup() {
+    createCanvas(256, 256);
+
+    img.filter('gray');
+    
+    tablica.fill(0);
+    img.loadPixels();
+
+    background(255);
+    stroke(color(0, 0, 0));
+
+    i = 0;
+    for (x = 0; x < img.width; x++) {
+        for (y = 0; y < img.height; y++) {
+            pos = 4 * (y * img.width + x);
+            tablica[img.pixels[pos]]++;
+            console.log(img.pixels[pos]);
+        }
+    }
+
+    for (let x = 0; x < tablica.length; x++) {
+        line(x, 256, x, 256-(tablica[x] * 256 / Math.max(... tablica)));
+    }
+
+}
+</script>
